@@ -6,7 +6,7 @@ export default function Library(){
    <Link href="/" className="cleanGoalsBrand"><strong>NACHY<span>AI</span></strong></Link>
    <nav>
     <Link href="/">⌂ <span>Home</span></Link>
-    <Link href="/assistant">▢ <span>Assistant</span></Link>
+    <Link href="/assistant">▢ <span>Chat</span></Link>
     <Link href="/goals">◎ <span>Goals</span></Link>
     <Link className="active" href="/library">▤ <span>Library</span></Link>
    </nav>
