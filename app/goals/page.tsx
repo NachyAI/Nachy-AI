@@ -7,7 +7,8 @@ type Goal={id:number;title:string;target:string;amount?:string;done:boolean};
 export default function Goals(){
  const[goals,setGoals]=useState<Goal[]>([]);
  const[title,setTitle]=useState("");
- const[target,setTarget]=useState("");\n const[amount,setAmount]=useState("");
+ const[target,setTarget]=useState("");
+ const[amount,setAmount]=useState("");
  useEffect(()=>{try{const s=localStorage.getItem("nachyai-simple-goals");if(s)setGoals(JSON.parse(s))}catch{}},[]);
  function save(next:Goal[]){setGoals(next);localStorage.setItem("nachyai-simple-goals",JSON.stringify(next))}
  function add(e:React.FormEvent){e.preventDefault();if(!title.trim())return;save([...goals,{id:Date.now(),title:title.trim(),target,amount,done:false}]);setTitle("");setTarget("");setAmount("")}
