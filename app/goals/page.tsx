@@ -15,7 +15,7 @@ export default function Goals(){
  function remove(id:number){save(goals.filter(g=>g.id!==id))}
  const completed=goals.filter(g=>g.done).length;
  return <main className="newHome cleanGoals">
-  <aside className="newSide"><Link href="/" className="cleanGoalsBrand"><strong>NACHY<span>AI</span></strong></Link><nav><Link href="/">⌂ Home</Link><Link href="/assistant">▢ Assistant</Link><Link className="active" href="/goals">◎ Goals</Link><Link href="/library">▤ Library</Link></nav></aside>
+  <aside className="newSide"><Link href="/" className="cleanGoalsBrand"><strong>NACHY<span>AI</span></strong></Link><nav><Link href="/">⌂ Home</Link><Link href="/assistant">▢ Chat</Link><Link className="active" href="/goals">◎ Goals</Link><Link href="/library">▤ Library</Link></nav></aside>
   <section className="cleanGoalsMain">
    <header><div><small>KEEP MOVING FORWARD</small><h1>Goals</h1><p>Set a goal, give it a date, and check it off when you're done.</p></div></header>
    <form className="simpleGoalForm" onSubmit={add}><input value={title} onChange={e=>setTitle(e.target.value)} placeholder="What do you want to accomplish?"/><input type="date" value={target} onChange={e=>setTarget(e.target.value)}/><button type="submit">＋ Add goal</button></form>
