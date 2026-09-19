@@ -1,0 +1,8 @@
+"use client";
+import {useState} from "react";
+type Msg={role:"user"|"assistant";text:string};
+export default function Assistant(){
+ const [messages,setMessages]=useState<Msg[]>([{role:"assistant",text:"Hi — I’m NachyAI. What do you want to create or accomplish today?"}]);
+ const [input,setInput]=useState("");
+ function send(){const q=input.trim();if(!q)return;setMessages(m=>[...m,{role:"user",text:q},{role:"assistant",text:"NachyAI is ready for its AI connection. Next we’ll connect the model so I can answer, create, and help you work."}]);setInput("")}
+ return <main className="assistantPage"><div className="assistantTop"><a href="/" className="brand">▷ Nachy<span>AI</span></a><span>AI Assistant</span></div><section className="assistantShell"><div className="assistantIntro"><p className="eyebrow">NACHYAI</p><h1>What can I help you create?</h1><div className="quick"><button onClick={()=>setInput("Create an image for my business")}>Create an image</button><button onClick={()=>setInput("Help me make a video")}>Make a video</button><button onClick={()=>setInput("Help me write something")}>Write something</button><button onClick={()=>setInput("Help me brainstorm an idea")}>Brainstorm</button></div></div><div className="messages">{messages.map((m,i)=><div key={i} className={"message "+m.role}>{m.text}</div>)}</div><div className="composer"><textarea value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}}} placeholder="Ask NachyAI anything…"/><button onClick={send}>↑</button></div><small className="assistantNote">AI features are being connected. Generated content should be reviewed before use.</small></section></main>
