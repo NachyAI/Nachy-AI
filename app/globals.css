@@ -35,3 +35,13 @@
 
 /* Advanced goals */
 .goalFilters{display:flex;gap:8px;margin:0 0 18px}.goalFilters button{border:1px solid #304763;background:#0b192b;color:#fff;border-radius:20px;padding:8px 14px;cursor:pointer}.goalFilters button.active{background:#ff2638;border-color:#ff2638}.goalCardButtons{display:flex;gap:7px}.goalCardButtons button{width:34px;height:34px;border:1px solid #304763!important;background:#101f32!important;color:#fff!important;border-radius:8px;font-size:16px!important;cursor:pointer}.goalModal select{border:1px solid #304763;background:#07111f;color:#fff;border-radius:9px;padding:13px;outline:0}
+
+/* Simple Goals */
+.simpleGoalForm{display:grid;grid-template-columns:minmax(220px,1fr) 170px auto;gap:10px;margin:28px 0 18px;padding:16px;border:1px solid #263b55;border-radius:14px;background:#0b1727}
+.simpleGoalForm input{min-width:0;padding:13px 14px;border:1px solid #304763;border-radius:9px;background:#07111f;color:#fff;font:inherit;outline:none}
+.simpleGoalForm button{padding:13px 18px;border:0;border-radius:9px;background:#ff2638;color:#fff;font-weight:700;cursor:pointer}
+.simpleGoalSummary{display:flex;align-items:center;gap:9px;margin:18px 0;color:#91a2b8}.simpleGoalSummary b{font-size:20px;color:#fff}.simpleGoalSummary span{margin-right:18px}
+.simpleGoalEmpty{text-align:center;padding:65px 20px;border:1px dashed #304763;border-radius:14px;color:#91a2b8}.simpleGoalEmpty h2{color:#fff;margin:0 0 8px}
+.simpleGoalList{display:grid;gap:10px}.simpleGoalList article{display:flex;align-items:center;gap:13px;padding:16px;border:1px solid #263b55;border-radius:12px;background:#0b1727}.simpleGoalList article.done{opacity:.6}.simpleGoalList article.done h3{text-decoration:line-through}.simpleGoalList article div{flex:1}.simpleGoalList h3{margin:0 0 5px;color:#fff}.simpleGoalList small{color:#91a2b8}
+.simpleGoalCheck{width:30px;height:30px;border:1px solid #51657d;border-radius:50%;background:transparent;color:#fff;cursor:pointer}.simpleGoalList article.done .simpleGoalCheck{background:#ff2638;border-color:#ff2638}.simpleGoalDelete{border:0;background:transparent;color:#91a2b8;font-size:24px;cursor:pointer}
+@media(max-width:760px){.simpleGoalForm{grid-template-columns:1fr}.simpleGoalForm button{width:100%}}
