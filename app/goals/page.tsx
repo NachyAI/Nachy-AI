@@ -8,9 +8,11 @@ export default function Goals(){
  const[goals,setGoals]=useState<Goal[]>([]);
  const[title,setTitle]=useState("");
  const[target,setTarget]=useState("");
+ const[authorized,setAuthorized]=useState<boolean|null>(null);
  const[amount,setAmount]=useState("");
  const[current,setCurrent]=useState("");
- useEffect(()=>{try{const s=localStorage.getItem("nachyai-simple-goals");if(s)setGoals(JSON.parse(s))}catch{}},[]);
+ useEffect(()=>{try{const user=localStorage.getItem("nachyai-user");if(!user){location.replace("/signin?next=/goals");return}setAuthorized(true);const s=localStorage.getItem("nachyai-simple-goals");if(s)setGoals(JSON.parse(s))}catch{location.replace("/signin?next=/goals")}},[]);
+ if(authorized!==true)return <main className="newHome cleanGoals"><section className="cleanGoalsMain"><p>Checking your account…</p></section></main>;
  function save(next:Goal[]){setGoals(next);localStorage.setItem("nachyai-simple-goals",JSON.stringify(next))}
  function add(e:React.FormEvent){e.preventDefault();if(!title.trim())return;save([...goals,{id:Date.now(),title:title.trim(),target,amount,current,done:false}]);setTitle("");setTarget("");setAmount("");setCurrent("")}
  function toggle(id:number){save(goals.map(g=>g.id===id?{...g,done:!g.done}:g))}
