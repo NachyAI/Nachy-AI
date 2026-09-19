@@ -1,21 +1,16 @@
 "use client";
+import Link from "next/link";
 import {useState} from "react";
+type Msg={role:"user"|"assistant";text:string};
 export default function Assistant(){
- const [view,setView]=useState("Overview");
- const items=["Overview","Customer Inbox","AI Assistant","Employees","Documents","Knowledge Base","Analytics"];
- return <main style={{minHeight:"100vh",background:"#f5f6f8",color:"#17202a",display:"grid",gridTemplateColumns:"240px 1fr",fontFamily:"Arial, sans-serif"}}>
- <aside style={{background:"#111a2b",color:"white",padding:"28px 18px",display:"flex",flexDirection:"column",gap:8}}>
- <a href="/" style={{fontSize:23,fontWeight:800,margin:"0 10px 30px"}}>Nachy<span style={{color:"#8ea7d1"}}>AI</span><small style={{display:"block",fontSize:10,letterSpacing:2,color:"#7f8da5",marginTop:5}}>BUSINESS</small></a>
- {items.map(x=><button key={x} onClick={()=>setView(x)} style={{border:0,textAlign:"left",padding:"13px 14px",borderRadius:9,cursor:"pointer",background:view===x?"#24334d":"transparent",color:view===x?"white":"#aeb9ca",fontSize:14,fontWeight:600}}>{x}</button>)}
- <div style={{marginTop:"auto",padding:"14px",borderTop:"1px solid #26334a",color:"#8f9caf",fontSize:12}}>NachyAI Business<br/><span style={{color:"#c5cfdd"}}>Workspace</span></div>
- </aside>
- <section style={{padding:"36px 42px",maxWidth:1350,width:"100%"}}>
- <header style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:30}}><div><small style={{color:"#7b8492"}}>BUSINESS COMMAND CENTER</small><h1 style={{fontSize:34,margin:"6px 0"}}>{view}</h1></div><button style={{border:"1px solid #dce0e5",background:"white",borderRadius:10,padding:"11px 15px"}}>Business settings</button></header>
- {view==="Overview"?<><div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:15,marginBottom:20}}>
- {[["12","Open conversations"],["8","AI resolved today"],["2","Need your attention"],["94%","Response coverage"]].map(([n,l])=><article key={l} style={{background:"white",border:"1px solid #e1e4e8",borderRadius:14,padding:20}}><strong style={{fontSize:29}}>{n}</strong><p style={{color:"#737d89",fontSize:13,marginBottom:0}}>{l}</p></article>)}</div>
- <div style={{display:"grid",gridTemplateColumns:"1.35fr .65fr",gap:18}}>
- <article style={{background:"white",border:"1px solid #e1e4e8",borderRadius:14,padding:24}}><div style={{display:"flex",justifyContent:"space-between"}}><div><small style={{color:"#7b8492"}}>CUSTOMER SERVICE</small><h2 style={{margin:"7px 0 22px"}}>Needs attention</h2></div><button onClick={()=>setView("Customer Inbox")} style={{height:38,border:0,borderRadius:8,background:"#17243a",color:"white",padding:"0 14px"}}>Open inbox</button></div>
- {[["Website chat","Do you offer refunds if we need to cancel?","2 min"],["Customer message","I haven't received my confirmation yet.","8 min"],["Website chat","Can I speak with someone about a group booking?","14 min"]].map(x=><div key={x[1]} style={{padding:"16px 0",borderTop:"1px solid #edf0f2"}}><div style={{display:"flex",justifyContent:"space-between"}}><b style={{fontSize:13}}>{x[0]}</b><small style={{color:"#8a929c"}}>{x[2]}</small></div><p style={{margin:"7px 0 0",color:"#626d78"}}>{x[1]}</p></div>)}</article>
- <div style={{display:"grid",gap:18}}><article style={{background:"#17243a",color:"white",borderRadius:14,padding:24}}><small style={{color:"#91a3bd"}}>ASK NACHYAI</small><h2 style={{fontSize:22}}>What does your business need?</h2><p style={{color:"#b9c3d2",lineHeight:1.5,fontSize:14}}>Create a policy, answer a customer, write an employee document, or ask about your operation.</p><button onClick={()=>setView("AI Assistant")} style={{border:0,borderRadius:8,padding:"11px 14px",fontWeight:700}}>Ask NachyAI →</button></article><article style={{background:"white",border:"1px solid #e1e4e8",borderRadius:14,padding:22}}><small style={{color:"#7b8492"}}>KNOWLEDGE</small><h3>Teach NachyAI your business</h3><p style={{color:"#737d89",fontSize:14,lineHeight:1.5}}>Add policies, hours, pricing, FAQs and documents so customer answers stay grounded in your information.</p><button onClick={()=>setView("Knowledge Base")} style={{border:0,background:"transparent",padding:0,fontWeight:700}}>Manage knowledge →</button></article></div></div></>:<div style={{background:"white",border:"1px solid #e1e4e8",borderRadius:14,padding:35,minHeight:430}}><small style={{color:"#7b8492"}}>NACHYAI BUSINESS</small><h2>{view}</h2><p style={{color:"#697480",maxWidth:620,lineHeight:1.6}}>This workspace is ready for the next build step. We’ll connect this area to your business data and AI tools.</p></div>}
- </section></main>
+ const [input,setInput]=useState("");
+ const [messages,setMessages]=useState<Msg[]>([{role:"assistant",text:"I'm here. What's going on?"}]);
+ function send(){const q=input.trim();if(!q)return;setMessages(m=>[...m,{role:"user",text:q},{role:"assistant",text:"I hear you. The live AI connection is the next step we're building, but this conversation experience is ready for it."}]);setInput("")}
+ return <main className="coachChat">
+  <aside className="coachSide"><Link href="/" className="coachBrand">Nachy<span>AI</span><small>Here for you.</small></Link><button className="newChat" onClick={()=>setMessages([{role:"assistant",text:"I'm here. What's going on?"}])}>＋ New conversation</button><nav><Link href="/">⌂ Home</Link><a className="active">◯ Chat</a><a>◎ Goals</a><a>▤ Library</a><a>⚙ Settings</a></nav><p className="coachSideNote">NachyAI can help you think, plan, write, learn, and work through everyday challenges.</p></aside>
+  <section className="coachConversation"><header className="coachHeader"><div><b>NachyAI</b><small>AI life assistant</small></div><span>•••</span></header>
+   <div className="coachMessages">{messages.map((m,i)=><div key={i} className={"coachMessage "+m.role}>{m.role==="assistant"&&<span className="coachAvatar">N</span>}<p>{m.text}</p></div>)}</div>
+   <div className="coachBottom"><div className="coachSuggestions"><button onClick={()=>setInput("I need advice about something")}>I need advice</button><button onClick={()=>setInput("Help me make a plan")}>Make a plan</button><button onClick={()=>setInput("Help me make a decision")}>Help me decide</button></div><div className="coachComposer"><button>＋</button><textarea value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}}} placeholder="Message NachyAI..."/><button title="Voice">◉</button><button className="sendCoach" onClick={send}>↑</button></div><small>NachyAI can make mistakes. For important decisions, verify information.</small></div>
+  </section>
+ </main>
 }
