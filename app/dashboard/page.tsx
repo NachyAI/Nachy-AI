@@ -1,0 +1,4 @@
+import Link from "next/link";
+export default function Dashboard(){return <><header><div><p className="eyebrow">NACHYAI STUDIO</p><h1>Dashboard</h1></div></header>
+<div className="cards"><article><small>AVAILABLE CREDITS</small><strong>1,250</strong></article><article><small>VIDEOS CREATED</small><strong>0</strong></article><article><small>THIS MONTH</small><strong>0</strong></article></div>
+<section className="panel"><h2>Create something people stop for.</h2><p>Turn a product, photo or idea into a short-form video.</p><Link className="button" href="/dashboard/create">Create Video →</Link></section></>}

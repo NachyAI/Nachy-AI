@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function Videos(){return <><header><div><p className="eyebrow">LIBRARY</p><h1>My Videos</h1></div></header><section className="panel empty"><h2>No videos yet.</h2><p>Your generated videos will appear here.</p><Link href="/dashboard/create" className="button">Create Your First Video →</Link></section></>}
