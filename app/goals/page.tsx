@@ -1,11 +1,26 @@
 "use client";
-import Link from"next/link";import{useEffect,useState}from"react";
-type Goal={id:number;title:string;why:string;target:string;progress:number;category?:string;steps:{text:string;done:boolean}[]};
-export default function Goals(){const[goals,setGoals]=useState<Goal[]>([]);const[open,setOpen]=useState(false);const[title,setTitle]=useState("");const[why,setWhy]=useState("");const[target,setTarget]=useState("");const[category,setCategory]=useState("Personal");
-useEffect(()=>{try{const s=localStorage.getItem("nachyai-goals");if(s)setGoals(JSON.parse(s))}catch{}},[]);
-function save(next:Goal[]){setGoals(next);localStorage.setItem("nachyai-goals",JSON.stringify(next))}
-function add(){if(!title.trim())return;save([...goals,{id:Date.now(),title:title.trim(),why:why.trim(),target,progress:0,category,steps:[]}]);setTitle("");setWhy("");setTarget("");setCategory("Personal");setOpen(false)}
-function remove(id:number){save(goals.filter(g=>g.id!==id))}
-function addStep(id:number){const text=prompt("What's the next step?")?.trim();if(!text)return;save(goals.map(g=>g.id===id?{...g,steps:[...g.steps,{text,done:false}]}:g))}
-function toggle(id:number,n:number){save(goals.map(g=>{if(g.id!==id)return g;const steps=g.steps.map((s,i)=>i===n?{...s,done:!s.done}:s);const progress=steps.length?Math.round(steps.filter(s=>s.done).length/steps.length*100):0;return{...g,steps,progress}}))}
-return <main className="productPage goalPage"><aside className="productSide"><Link href="/" className="productBrand"><img src="/nachyai-logo.svg" alt="NachyAI"/>NachyAI</Link><nav><Link href="/">⌂ Home</Link><Link href="/assistant">◯ Chat</Link><Link className="active" href="/goals">◎ Goals</Link><Link href="/library">▤ Library</Link></nav><div className="goalSideQuote">Small steps still move you forward.</div></aside><section className="productMain"><header className="goalHeader"><div><small>YOUR PROGRESS</small><h1>Goals</h1><p>Build a plan, take the next step, and see your progress.</p></div><button className="goalAddTop" onClick={()=>setOpen(true)}>＋ New goal</button></header><div className="goalStats"><article><b>{goals.length}</b><span>Active goals</span></article><article><b>{goals.reduce((a,g)=>a+g.steps.filter(s=>s.done).length,0)}</b><span>Steps completed</span></article><article><b>{goals.length?Math.round(goals.reduce((a,g)=>a+g.progress,0)/goals.length):0}%</b><span>Overall progress</span></article></div>{!goals.length?<div className="goalWelcome"><small>START WITH ONE THING</small><h2>What do you want to make happen?</h2><p>It can be personal, work-related, financial, health-focused, or anything else that matters to you. NachyAI can help you break it into manageable steps.</p><button onClick={()=>setOpen(true)}>Create my first goal</button></div>:<div className="goalList">{goals.map(g=><article key={g.id} className="goalCard"><div className="goalCardTop"><div><small>{g.category||"Personal"}{g.target?" · TARGET "+g.target:""}</small><h2>{g.title}</h2>{g.why&&<p>{g.why}</p>}</div><button onClick={()=>remove(g.id)}>×</button></div><div className="goalProgress"><div><span style={{width:g.progress+"%"}}/></div><b>{g.progress}%</b></div><div className="goalSteps">{g.steps.map((s,i)=><label key={i}><input type="checkbox" checked={s.done} onChange={()=>toggle(g.id,i)}/><span>{s.text}</span></label>)}</div><div className="goalActions"><button onClick={()=>addStep(g.id)}>＋ Add next step</button><Link href={"/assistant"}>Work on this with NachyAI →</Link></div></article>)}</div>}{open&&<div className="goalModal" onClick={()=>setOpen(false)}><div onClick={e=>e.stopPropagation()}><button className="goalClose" onClick={()=>setOpen(false)}>×</button><small>NEW GOAL</small><h2>What do you want to accomplish?</h2><label>Goal<input autoFocus value={title} onChange={e=>setTitle(e.target.value)} placeholder="Example: Save $5,000"/></label><label>Why does this matter?<textarea value={why} onChange={e=>setWhy(e.target.value)} placeholder="Optional — your reason can help keep you focused."/></label><label>Category<select value={category} onChange={e=>setCategory(e.target.value)}><option>Personal</option><option>Money</option><option>Career</option><option>Health</option><option>Learning</option><option>Relationships</option><option>Other</option></select></label><label>Target date<input type="date" value={target} onChange={e=>setTarget(e.target.value)}/></label><button className="goalCreateBtn" onClick={add}>Create goal</button></div></div>}</section></main>}
+import Link from "next/link";
+import {useEffect,useState} from "react";
+
+type Goal={id:number;title:string;target:string;done:boolean};
+
+export default function Goals(){
+ const[goals,setGoals]=useState<Goal[]>([]);
+ const[title,setTitle]=useState("");
+ const[target,setTarget]=useState("");
+ useEffect(()=>{try{const s=localStorage.getItem("nachyai-simple-goals");if(s)setGoals(JSON.parse(s))}catch{}},[]);
+ function save(next:Goal[]){setGoals(next);localStorage.setItem("nachyai-simple-goals",JSON.stringify(next))}
+ function add(e:React.FormEvent){e.preventDefault();if(!title.trim())return;save([...goals,{id:Date.now(),title:title.trim(),target,done:false}]);setTitle("");setTarget("")}
+ function toggle(id:number){save(goals.map(g=>g.id===id?{...g,done:!g.done}:g))}
+ function remove(id:number){save(goals.filter(g=>g.id!==id))}
+ const completed=goals.filter(g=>g.done).length;
+ return <main className="productPage goalPage">
+  <aside className="productSide"><Link href="/" className="productBrand"><img src="/nachyai-logo.svg" alt="NachyAI"/>NachyAI</Link><nav><Link href="/">⌂ Home</Link><Link href="/assistant">◯ Assistant</Link><Link className="active" href="/goals">◎ Goals</Link><Link href="/library">▤ Library</Link></nav></aside>
+  <section className="productMain">
+   <header><div><small>KEEP MOVING FORWARD</small><h1>Goals</h1><p>Set a goal, give it a date, and check it off when you're done.</p></div></header>
+   <form className="simpleGoalForm" onSubmit={add}><input value={title} onChange={e=>setTitle(e.target.value)} placeholder="What do you want to accomplish?"/><input type="date" value={target} onChange={e=>setTarget(e.target.value)}/><button type="submit">＋ Add goal</button></form>
+   <div className="simpleGoalSummary"><b>{goals.length-completed}</b><span>Active</span><b>{completed}</b><span>Completed</span></div>
+   {!goals.length?<div className="simpleGoalEmpty"><h2>No goals yet</h2><p>Add one above. Keep it simple and focus on what matters next.</p></div>:<div className="simpleGoalList">{goals.map(g=><article key={g.id} className={g.done?"done":""}><button className="simpleGoalCheck" onClick={()=>toggle(g.id)}>{g.done?"✓":""}</button><div><h3>{g.title}</h3><small>{g.target?"Target: "+g.target:"No target date"}</small></div><button className="simpleGoalDelete" onClick={()=>remove(g.id)}>×</button></article>)}</div>}
+  </section>
+ </main>
+}
