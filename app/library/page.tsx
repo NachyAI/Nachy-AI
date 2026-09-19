@@ -1,1 +1,27 @@
-import Link from"next/link";export default function Library(){return <main className="productPage"><aside className="productSide"><Link href="/" className="productBrand"><img src="/nachyai-logo.svg" alt="NachyAI"/>NachyAI</Link><nav><Link href="/">⌂ Home</Link><Link href="/assistant">◯ Chat</Link><Link href="/goals">◎ Goals</Link><Link className="active" href="/library">▤ Library</Link></nav></aside><section className="productMain"><header><div><small>YOUR SPACE</small><h1>Library</h1><p>Keep useful plans, notes, files and conversations together.</p></div></header><div className="libraryHero"><div><b>Your library is ready.</b><p>Saved conversations and things you choose to keep will live here.</p></div><Link href="/assistant">Start a conversation →</Link></div><div className="libraryRows"><article><span>▤</span><div><b>Saved conversations</b><p>Return to conversations that matter.</p></div></article><article><span>✓</span><div><b>Plans & notes</b><p>Keep plans NachyAI helps you create.</p></div></article><article><span>＋</span><div><b>Files</b><p>File uploads are coming in the next build stage.</p></div></article></div></section></main>}
+import Link from "next/link";
+
+export default function Library(){
+ return <main className="newHome cleanGoals">
+  <aside className="newSide">
+   <Link href="/" className="cleanGoalsBrand"><strong>NACHY<span>AI</span></strong></Link>
+   <nav>
+    <Link href="/">⌂ <span>Home</span></Link>
+    <Link href="/assistant">▢ <span>Assistant</span></Link>
+    <Link href="/goals">◎ <span>Goals</span></Link>
+    <Link className="active" href="/library">▤ <span>Library</span></Link>
+   </nav>
+  </aside>
+  <section className="cleanGoalsMain">
+   <header><div><small>YOUR SPACE</small><h1>Library</h1><p>Keep the conversations and plans that matter to you in one place.</p></div></header>
+   <div className="libraryHero">
+    <div><b>Your library</b><p>Saved conversations and things you choose to keep will appear here.</p></div>
+    <Link href="/assistant">Start a conversation →</Link>
+   </div>
+   <div className="libraryRows">
+    <article><span>▤</span><div><b>Saved conversations</b><p>Return to conversations that matter.</p></div></article>
+    <article><span>✓</span><div><b>Plans & notes</b><p>Keep useful plans and notes together.</p></div></article>
+    <article><span>◎</span><div><b>Goals</b><p>Your goals stay available from the Goals page.</p></div></article>
+   </div>
+  </section>
+ </main>
+}
