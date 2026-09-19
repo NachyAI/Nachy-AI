@@ -1,11 +1,10 @@
 "use client";
 import Link from "next/link";
-import {useEffect,useRef,useState} from "react";\nimport {useSearchParams} from "next/navigation";
-type Msg={role:"user"|"assistant";text:string};
+import {useEffect,useRef,useState} from "react";\ntype Msg={role:"user"|"assistant";text:string};
 export default function Assistant(){\n const params=useSearchParams();
  const [input,setInput]=useState("");const[loading,setLoading]=useState(false);const[historyOpen,setHistoryOpen]=useState(false);
  const[messages,setMessages]=useState<Msg[]>([{role:"assistant",text:"I'm here. What's going on?"}]);const end=useRef<HTMLDivElement>(null);
- useEffect(()=>{try{const saved=localStorage.getItem("nachyai-chat");if(saved)setMessages(JSON.parse(saved));const tool=params.get("tool");if(tool)setInput("Help me with "+tool+". Ask me the right questions and guide me step by step.")}catch{}},[params]);
+ useEffect(()=>{try{const saved=localStorage.getItem("nachyai-chat");if(saved)setMessages(JSON.parse(saved));const tool=new URLSearchParams(window.location.search).get("tool");if(tool)setInput("Help me with "+tool+". Ask me the right questions and guide me step by step.")}catch{}},[]);
  useEffect(()=>{try{localStorage.setItem("nachyai-chat",JSON.stringify(messages))}catch{};end.current?.scrollIntoView({behavior:"smooth"})},[messages,loading]);
  function fresh(){setMessages([{role:"assistant",text:"I'm here. What's going on?"}]);setInput("")}
  async function send(text?:string){const q=(text??input).trim();if(!q||loading)return;const next=[...messages,{role:"user" as const,text:q}];setMessages(next);setInput("");setLoading(true);try{const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:next})});const d=await r.json();setMessages(m=>[...m,{role:"assistant",text:d.text||d.error||"I couldn't respond right now. Please try again."}])}catch{setMessages(m=>[...m,{role:"assistant",text:"I couldn't connect right now. Please try again."}])}finally{setLoading(false)}}
