@@ -11,3 +11,6 @@
 
 /* NachyAI red brand refresh */
 .lifeLogo strong span,.coachBrandName>span{color:#ff2638!important}.lifeSideNav .active,.coachSide nav .active{background:#45151d!important}.lifePro{background:linear-gradient(90deg,#c81426,#ff3344)!important}.lifePrompt{border-color:#b92a39!important}.promptTools button,.coachComposer .sendCoach{background:#ed2638!important}.coachMessage.user p{background:#8f1d2b!important;border-color:#c52d3e!important}.coachAvatar{filter:drop-shadow(0 0 7px rgba(255,38,56,.28))}.nachyFaceLogo{filter:drop-shadow(0 0 7px rgba(255,38,56,.18))}
+
+/* Keep the existing NachyAI blue interface; red is logo-only */
+.lifeLogo strong span,.coachBrandName>span{color:#3197ff!important}.lifeSideNav .active{background:#12345d!important}.coachSide nav .active{background:#12345d!important}.lifePro{background:linear-gradient(90deg,#087cff,#9b48ff)!important}.lifePrompt{border-color:#3979ff!important}.promptTools button,.coachComposer .sendCoach{background:#2686f5!important}.coachMessage.user p{background:#174e91!important;border-color:#2b6db7!important}.coachAvatar,.nachyFaceLogo{filter:none!important}
